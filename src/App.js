@@ -1,24 +1,29 @@
-import logo from './logo.svg';
+import React,{useState, createContext} from 'react';
 import './App.css';
+import Button, { ButtonCe, ButtonEq } from './components/Button';
+import Display from './components/Display';
+
+export const UserContext = createContext(null);
 
 function App() {
+  const [value, setValue] = useState('0');
+  const chars = ['/','*','7','8','9','-','4','5','6','+','1','2','3','0','00','.']
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <UserContext.Provider value={{ value: value, setValue: setValue }}>
+      <div className="container">
+        <div className="calculator">
+          <Display />
+          <ButtonCe data={{char:'CE'}} />
+          {chars.map((character) => {
+              return (
+                  <Button data={{char:character}} />
+              )
+          })}
+          <ButtonEq data={{char:'='}} />
+        </div>
+      </div>
+    </UserContext.Provider>
   );
 }
 
